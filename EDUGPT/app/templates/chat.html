@@ -1,0 +1,517 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- Add Marked.js for Markdown parsing -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<!-- Add Highlight.js for code highlighting -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<div class="container-fluid p-0 overflow-hidden" style="height: calc(100vh - 92px); background: #f8f9fa;">
+    <div class="row g-0 h-100">
+        <!-- Sidebar / Agent Selector (Dark Theme) -->
+        <div class="col-lg-3 col-md-4 h-100 d-flex flex-column text-white"
+            style="background: linear-gradient(180deg, #1a1f2c 0%, #2d3748 100%); box-shadow: 2px 0 10px rgba(0,0,0,0.1); z-index: 10;">
+            <div class="p-4 d-flex align-items-center justify-content-between"
+                style="background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <h5 class="fw-bold mb-0 text-white tracking-wide d-flex align-items-center gap-2">
+                    <div class="bg-primary bg-gradient rounded-circle d-flex align-items-center justify-content-center shadow"
+                        style="width: 35px; height: 35px;">
+                        <i class="bi bi-robot text-white small"></i>
+                    </div>
+                    AI Faculty
+                </h5>
+                <span
+                    class="badge bg-success bg-opacity-25 text-success rounded-pill px-3 shadow-sm border border-success border-opacity-25">Online</span>
+            </div>
+
+            <div class="list-group list-group-flush flex-grow-1 overflow-auto custom-scrollbar p-3 gap-2">
+                <!-- Agent: Architect -->
+                <a href="#" class="agent-card rounded-3 p-3 text-decoration-none transition-all active"
+                    onclick="selectAgent('Architect', 'Career Strategist', 'https://api.dicebear.com/7.x/bottts/svg?seed=Architect', 'success')">
+                    <div class="d-flex align-items-center">
+                        <div class="avatar-wrapper position-relative">
+                            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Architect"
+                                class="rounded-circle bg-white p-1" width="40" height="40">
+                            <span
+                                class="status-dot position-absolute bottom-0 end-0 p-1 bg-success border border-dark rounded-circle"></span>
+                        </div>
+                        <div class="ms-3">
+                            <div class="fw-bold text-white mb-0">The Architect</div>
+                            <small class="text-white-50" style="font-size: 0.75rem;">Career Path Strategy</small>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Agent: Mentor -->
+                <a href="#" class="agent-card rounded-3 p-3 text-decoration-none transition-all"
+                    onclick="selectAgent('Mentor Core', 'Senior Instructor', 'https://api.dicebear.com/7.x/bottts/svg?seed=Mentor', 'primary')">
+                    <div class="d-flex align-items-center">
+                        <div class="avatar-wrapper position-relative">
+                            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Mentor"
+                                class="rounded-circle bg-white p-1" width="40" height="40">
+                            <span
+                                class="status-dot position-absolute bottom-0 end-0 p-1 bg-success border border-dark rounded-circle"></span>
+                        </div>
+                        <div class="ms-3">
+                            <div class="fw-bold text-white mb-0">Mentor Core</div>
+                            <small class="text-white-50" style="font-size: 0.75rem;">Concept Explainer</small>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Agent: Oracle -->
+                <a href="#" class="agent-card rounded-3 p-3 text-decoration-none transition-all"
+                    onclick="selectAgent('The Oracle', 'Data Analyst', 'https://api.dicebear.com/7.x/bottts/svg?seed=Oracle', 'warning')">
+                    <div class="d-flex align-items-center">
+                        <div class="avatar-wrapper position-relative">
+                            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Oracle"
+                                class="rounded-circle bg-white p-1" width="40" height="40">
+                            <span
+                                class="status-dot position-absolute bottom-0 end-0 p-1 bg-warning border border-dark rounded-circle"></span>
+                        </div>
+                        <div class="ms-3">
+                            <div class="fw-bold text-white mb-0">The Oracle</div>
+                            <small class="text-white-50" style="font-size: 0.75rem;">Progress Analytics</small>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Agent: Guardian -->
+                <a href="#" class="agent-card rounded-3 p-3 text-decoration-none transition-all"
+                    onclick="selectAgent('Guardian', 'Quality Control', 'https://api.dicebear.com/7.x/bottts/svg?seed=Guardian', 'danger')">
+                    <div class="d-flex align-items-center">
+                        <div class="avatar-wrapper position-relative">
+                            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Guardian"
+                                class="rounded-circle bg-white p-1" width="40" height="40">
+                            <span
+                                class="status-dot position-absolute bottom-0 end-0 p-1 bg-success border border-dark rounded-circle"></span>
+                        </div>
+                        <div class="ms-3">
+                            <div class="fw-bold text-white mb-0">Guardian</div>
+                            <small class="text-white-50" style="font-size: 0.75rem;">Fact Verification</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Sidebar Footer -->
+            <div class="p-3 fs-7 text-center text-white-50 border-top border-light border-opacity-10 small">
+                <i class="bi bi-cpu-fill me-1"></i> Powered by Neural Networks
+            </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="col-lg-9 col-md-8 d-flex flex-column h-100 position-relative"
+            style="background: #f0f2f5 url('https://www.transparenttextures.com/patterns/subtle-white-feathers.png');">
+
+            <!-- Chat Header -->
+            <div
+                class="px-4 py-3 bg-white border-bottom shadow-sm d-flex align-items-center sticky-top z-2 backdrop-blur bg-opacity-90">
+                <div class="d-flex align-items-center">
+                    <div class="position-relative me-3">
+                        <img id="header-avatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=Architect"
+                            class="rounded-circle border border-2 border-light shadow-sm bg-white" width="48"
+                            height="48">
+                        <span
+                            class="position-absolute bottom-0 end-0 p-1 bg-success rounded-circle border border-2 border-white"></span>
+                    </div>
+                    <div>
+                        <h5 id="header-name" class="fw-bold mb-0 text-dark">The Architect</h5>
+                        <div class="d-flex align-items-center gap-2">
+                            <small id="header-role" class="text-muted text-uppercase fw-bold"
+                                style="font-size: 0.7rem; letter-spacing: 1px;">Career Strategist</small>
+                            <span class="badge bg-light text-dark border rounded-pill px-2 py-0"
+                                style="font-size: 0.65rem;">AI v2.0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages Area -->
+            <div class="flex-grow-1 p-4 overflow-auto custom-scrollbar" id="chat-messages">
+                <!-- Messages will be injected here -->
+            </div>
+
+            <!-- Input Area -->
+            <div class="p-4 pt-2">
+                <div class="bg-white rounded-4 shadow-lg border p-2 position-relative">
+                    <form id="chat-form" class="d-flex align-items-end gap-2" onsubmit="sendMessage(event)">
+                        <textarea id="user-input" class="form-control border-0 shadow-none bg-transparent py-3 ps-3"
+                            rows="1" placeholder="Type your message..."
+                            style="resize: none; max-height: 150px; scrollbar-width: none;"
+                            oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
+
+                        <button type="submit"
+                            class="btn btn-primary rounded-circle p-0 d-flex align-items-center justify-content-center shadow-md mb-1 me-1 hover-scale"
+                            style="width: 45px; height: 45px; min-width: 45px; background: linear-gradient(135deg, #0d6efd, #0a58ca); border: none;">
+                            <i class="bi bi-send-fill fs-5"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="text-center mt-2">
+                    <small class="text-muted" style="font-size: 0.7rem;">EduGPT can make mistakes. Verify important
+                        info.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- State & Config ---
+    let currentAgent = 'The Architect';
+    let currentAvatar = 'https://api.dicebear.com/7.x/bottts/svg?seed=Architect';
+    let messageHistory = [];
+
+    // --- Initialization ---
+    document.addEventListener('DOMContentLoaded', () => {
+        // Parse URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        const agent = urlParams.get('agent');
+
+        const selectors = document.querySelectorAll('.agent-card');
+
+        if (agent) {
+            if (agent.includes('Architect')) triggerSelect(selectors[0], 'Architect', 'Career Strategist', 'https://api.dicebear.com/7.x/bottts/svg?seed=Architect', 'success');
+            else if (agent.includes('Mentor')) triggerSelect(selectors[1], 'Mentor Core', 'Senior Instructor', 'https://api.dicebear.com/7.x/bottts/svg?seed=Mentor', 'primary');
+            else if (agent.includes('Oracle')) triggerSelect(selectors[2], 'The Oracle', 'Data Analyst', 'https://api.dicebear.com/7.x/bottts/svg?seed=Oracle', 'warning');
+            else if (agent.includes('Guardian')) triggerSelect(selectors[3], 'Guardian', 'Quality Control', 'https://api.dicebear.com/7.x/bottts/svg?seed=Guardian', 'danger');
+        } else {
+            // Default select first
+            triggerSelect(selectors[0], 'The Architect', 'Career Strategist', 'https://api.dicebear.com/7.x/bottts/svg?seed=Architect', 'success');
+        }
+    });
+
+    function triggerSelect(el, name, role, avatar, color) {
+        if (el) {
+            // Mock the click event parameters
+            selectAgent(name, role, avatar, color);
+            // Visually select
+            document.querySelectorAll('.agent-card').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+        }
+    }
+
+    // --- Core Functions ---
+
+    function selectAgent(name, role, avatar, colorClass) {
+        currentAgent = name;
+        currentAvatar = avatar;
+
+        // Update Header
+        const headerName = document.getElementById('header-name');
+        const headerRole = document.getElementById('header-role');
+        const headerImg = document.getElementById('header-avatar');
+
+        // Fade out effect
+        headerName.style.opacity = 0;
+        headerRole.style.opacity = 0;
+
+        setTimeout(() => {
+            headerName.innerText = name;
+            headerRole.innerText = role;
+            headerImg.src = avatar;
+            headerName.style.opacity = 1;
+            headerRole.style.opacity = 1;
+        }, 200);
+
+        // Update Sidebar Active State manually if clicked
+        if (event && event.currentTarget && event.currentTarget.classList.contains('agent-card')) {
+            document.querySelectorAll('.agent-card').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+        }
+
+        // Clear Chat & Add Welcome
+        const chatBox = document.getElementById('chat-messages');
+        chatBox.innerHTML = '';
+        messageHistory = [];
+
+        let welcomeMsg = "";
+        if (name.includes('Architect')) welcomeMsg = "**System Online.**\nI can build your learning roadmap. What goal are we targeting today?";
+        else if (name.includes('Mentor')) welcomeMsg = "Hello! I'm ready to explain. \nAsk me about any concept you find confusing.";
+        else if (name.includes('Oracle')) welcomeMsg = "**Analytics Engine Ready.**\nI can review your study patterns. Ready to optimize?";
+        else if (name.includes('Guardian')) welcomeMsg = "**Protocol Verified.**\nI am monitoring for factual accuracy. State your query.";
+
+        addMessage(name, welcomeMsg, 'ai');
+        messageHistory.push({ role: 'assistant', content: welcomeMsg });
+        hljs.highlightAll(); // Highlight welcome code if any
+    }
+
+    async function sendMessage(e) {
+        e.preventDefault();
+        const input = document.getElementById('user-input');
+        const text = input.value;
+        if (!text.trim()) return;
+
+        // User Message
+        messageHistory.push({ role: 'user', content: text });
+        addMessage('You', text, 'user');
+        input.value = '';
+        input.style.height = 'auto'; // Reset height
+
+        // Simulate Typing
+        showTypingIndicator();
+
+        // API Call
+        try {
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text, agent: currentAgent, history: messageHistory })
+            });
+            const data = await response.json();
+
+            removeTypingIndicator();
+            messageHistory.push({ role: 'assistant', content: data.reply });
+            addMessage(currentAgent, data.reply, 'ai');
+            hljs.highlightAll(); // Re-run highlighter
+
+        } catch (error) {
+            removeTypingIndicator();
+            addMessage('System', '**Connection Lost.** \nPlease check your network or try again.', 'ai');
+        }
+    }
+
+    function addMessage(sender, text, type) {
+        const chatBox = document.getElementById('chat-messages');
+        const div = document.createElement('div');
+        div.className = `d-flex mb-4 fade-in-up ${type === 'user' ? 'justify-content-end' : ''}`;
+
+        const avatarImg = type === 'ai' ? `
+            <div class="flex-shrink-0 me-3">
+                <img src="${currentAvatar}" class="rounded-circle border bg-white p-1 shadow-sm" width="40" height="40">
+            </div>` : '';
+
+        // const userAvatar = type === 'user' ? `
+        //     <div class="flex-shrink-0 ms-3">
+        //         <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center shadow-sm" style="width: 40px; height: 40px;">
+        //             <i class="bi bi-person-fill"></i>
+        //         </div>
+        //     </div>` : '';
+        const userAvatar = ''; // Cleaner without user avatar on right, just bubble
+
+        const bubbleClass = type === 'user'
+            ? 'bg-primary text-white rounded-tr-0'
+            : 'bg-white text-dark border shadow-sm rounded-tl-0';
+
+        const alignClass = type === 'user' ? 'align-items-end' : 'align-items-start';
+
+        // Parse Markdown for AI, strict text for User (to prevent XSS, though marked handles it usually)
+        let contentHtml = text;
+        if (type === 'ai') {
+            contentHtml = marked.parse(text);
+        } else {
+            // Escape user text approx or just let marked handle it safely if we wanted basic formatting for user
+            contentHtml = text.replace(/\n/g, '<br>');
+        }
+
+        div.innerHTML = `
+            ${avatarImg}
+            <div class="d-flex flex-column ${alignClass}" style="max-width: 85%;">
+                <div class="${type === 'ai' ? 'text-muted small fw-bold mb-2 ms-2 ls-1 text-uppercase' : 'd-none'}">
+                    ${sender}
+                </div>
+                <div class="py-2 px-3 rounded-4 shadow-sm ${bubbleClass} message-content" style="line-height: 1.6; font-size: 0.95rem;">
+                    ${contentHtml}
+                </div>
+                <div class="text-muted small mt-1 ${type === 'user' ? 'me-2' : 'ms-2'}" style="font-size: 0.70rem; opacity: 0.8;">
+                    ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </div>
+            </div>
+            ${userAvatar}
+        `;
+
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+        const chatBox = document.getElementById('chat-messages');
+        const div = document.createElement('div');
+        div.id = 'typing-indicator';
+        div.className = 'd-flex mb-4 fade-in-up';
+        div.innerHTML = `
+            <div class="flex-shrink-0 me-3">
+                <img src="${currentAvatar}" class="rounded-circle border bg-white p-1 shadow-sm" width="40" height="40">
+            </div>
+            <div class="bg-white p-3 rounded-4 border shadow-sm rounded-tl-0">
+                <div class="typing-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        `;
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+        const el = document.getElementById('typing-indicator');
+        if (el) el.remove();
+    }
+
+    // ENTER key to send (Shift+Enter for new line)
+    document.getElementById('user-input').addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            document.getElementById('chat-form').dispatchEvent(new Event('submit'));
+        }
+    });
+</script>
+
+<style>
+    /* Styling Enhancements */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .agent-card {
+        border-left: 4px solid transparent;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: rgba(255, 255, 255, 0.03);
+        margin-bottom: 5px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .agent-card:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .agent-card.active {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+        border-left-color: #0dcaf0;
+        border-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.1) rgba(255, 255, 255, 0.1) #0dcaf0;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .status-dot {
+        width: 12px;
+        height: 12px;
+    }
+
+    .message-content p:last-child {
+        margin-bottom: 0;
+    }
+
+    .message-content pre {
+        margin: 10px 0;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .rounded-tl-0 {
+        border-top-left-radius: 0 !important;
+    }
+
+    .rounded-tr-0 {
+        border-top-right-radius: 0 !important;
+    }
+
+    .hover-scale {
+        transition: transform 0.2s;
+    }
+
+    .hover-scale:active {
+        transform: scale(0.95);
+    }
+
+    .fade-in-up {
+        animation: fadeInUp 0.3s ease-out;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Typing Dots Animation */
+    .typing-dots {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        height: 100%;
+    }
+
+    .typing-dots span {
+        width: 6px;
+        height: 6px;
+        background: #adb5bd;
+        border-radius: 50%;
+        animation: typing 1.4s infinite ease-in-out both;
+    }
+
+    .typing-dots span:nth-child(1) {
+        animation-delay: -0.32s;
+    }
+
+    .typing-dots span:nth-child(2) {
+        animation-delay: -0.16s;
+    }
+
+    @keyframes typing {
+
+        0%,
+        80%,
+        100% {
+            transform: scale(0);
+        }
+
+        40% {
+            transform: scale(1);
+        }
+    }
+
+    .tracking-wide {
+        letter-spacing: 0.05em;
+    }
+
+    /* Markdown Styles Restraint */
+    .message-content img {
+        max-width: 100%;
+        border-radius: 8px;
+    }
+
+    .message-content table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 10px 0;
+        font-size: 0.9em;
+    }
+
+    .message-content th,
+    .message-content td {
+        border: 1px solid #dee2e6;
+        padding: 6px 10px;
+    }
+
+    .message-content th {
+        background: #f8f9fa;
+    }
+
+    .bg-primary {
+        background: linear-gradient(135deg, #0d6efd, #0056b3) !important;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="page-header-block text-center position-relative">
+    <div class="container">
+        <span class="badge bg-danger text-light mb-2 text-uppercase" style="letter-spacing: 2px;">Final
+            Assessment</span>
+        <h1 class="page-title">Final Exam: {{ course.topic }}</h1>
+        <p class="page-subtitle">Pass this to earn your official certificate.</p>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="expert-card p-5 border-0 shadow-lg">
+                <form action="{{ url_for('submit_final_exam', course_id=course.id) }}" method="POST">
+
+                    {% for q in questions %}
+                    <div class="mb-4">
+                        <h5 class="fw-bold mb-3">{{ loop.index }}. {{ q.text }}</h5>
+                        <div class="list-group">
+                            {% for option in q.options %}
+                            <label class="list-group-item list-group-item-action">
+                                <input class="form-check-input me-1" type="radio" name="q{{ q.id }}"
+                                    value="{{ option }}" required>
+                                {{ option }}
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <div class="text-center mt-5">
+                        <p class="text-muted small mb-3">By clicking Submit, you confirm that you have completed this
+                            exam independently.</p>
+                        <button type="submit" class="btn btn-warning fw-bold btn-lg px-5 shadow rounded-pill">
+                            🏆 Submit & Get Certificate
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

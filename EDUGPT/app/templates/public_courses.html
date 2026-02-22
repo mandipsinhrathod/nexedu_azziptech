@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="page-header-block text-center">
+    <h1 class="page-title">Featured Public Courses</h1>
+    <p class="page-subtitle">Check out what others are learning</p>
+</div>
+
+<div class="courses-section">
+    <div class="container">
+        <div class="row g-4">
+            {% for course in courses %}
+            <div class="col-md-4">
+                <div class="expert-card h-100 p-4">
+                    <h5 class="fw-bold">{{ course.topic }}</h5>
+                    <p class="text-muted small">{{ course.level }} • {{ course.style }}</p>
+                    <a href="#" class="btn btn-secondary-custom btn-sm w-100">View Syllabus (Preview)</a>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12 text-center">
+                <p class="text-muted">No public courses created yet. Be the first!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

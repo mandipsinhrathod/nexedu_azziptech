@@ -1,0 +1,339 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- Google Fonts for Premium Look -->
+<link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+
+<div class="container py-5 text-center">
+    <!-- Printing Instructions -->
+    <div class="d-print-none mb-5">
+        <h2 class="text-success fw-bold mb-3">Congratulations, {{ user.username }}! 🎉</h2>
+        <p class="lead text-muted mb-4">You've mastered <strong>{{ course.topic }}</strong>. Your certificate is ready.
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <button onclick="window.print()" class="btn btn-primary btn-lg shadow rounded-pill px-4">
+                <i class="bi bi-printer me-2"></i> Print / Save PDF
+            </button>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary btn-lg rounded-pill px-4">
+                <i class="bi bi-arrow-left me-2"></i> Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- Certificate Container -->
+    <div class="certificate-wrapper mx-auto">
+        <div class="certificate-outer text-dark">
+            <div class="certificate-inner d-flex flex-column align-items-center justify-content-between">
+
+                <!-- Header -->
+                <div class="cert-header mt-3">
+                    <h5 class="cert-org">EduGPT Online Academy</h5>
+                    <h1 class="cert-title">Certificate of Completion</h1>
+                </div>
+
+                <!-- Body -->
+                <div class="cert-body flex-grow-1 d-flex flex-column justify-content-center py-4">
+                    <p class="cert-text-italic">This authorizes that</p>
+                    <h2 class="cert-name">{{ user.username }}</h2>
+                    <p class="cert-text">has successfully completed the comprehensive curriculum for</p>
+
+                    <div class="cert-topic-wrapper">
+                        <h2 class="cert-topic">{{ course.topic }}</h2>
+                    </div>
+
+                    <p class="cert-date">Awarded on {{ course.updated_at.strftime('%B %d, %Y') if course.updated_at else
+                        'February 19, 2026' }}</p>
+                </div>
+
+                <!-- Footer (Signatures) -->
+                <div class="cert-footer row w-100 align-items-end mt-3">
+                    <!-- Signature 1 -->
+                    <div class="col-md-4 col-sm-12 text-center mb-4 mb-md-0 order-2 order-md-1">
+                        <div class="signature">Alexei Petrov</div>
+                        <div class="signature-title">Chief Instructor</div>
+                    </div>
+
+                    <!-- Seal -->
+                    <div class="col-md-4 col-sm-12 text-center position-relative mb-4 mb-md-0 order-1 order-md-2">
+                        <div class="seal-container mx-auto">
+                            <div class="seal-inner">
+                                EXCELLENCE<br>AWARD
+                            </div>
+                        </div>
+                        <div class="ribbon-tail"></div>
+                    </div>
+
+                    <!-- Signature 2 -->
+                    <div class="col-md-4 col-sm-12 text-center order-3 order-md-3">
+                        <div class="signature">EduGPT AI</div>
+                        <div class="signature-title">Platform Director</div>
+                    </div>
+                </div>
+
+                <div class="cert-id mt-4 text-muted">
+                    Certificate ID: {{ course.id }}A7X-{{ user.id }}-{{ 1000 + course.id }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* VARIABLES & BASE STYLES */
+    .certificate-wrapper {
+        max-width: 900px;
+        width: 100%;
+        position: relative;
+    }
+
+    .certificate-outer {
+        background: #fff url('https://www.transparenttextures.com/patterns/cream-paper.png');
+        border: 10px solid #2c3e50;
+        padding: 40px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        aspect-ratio: 1.414 / 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .certificate-inner {
+        border: 2px solid #d4af37;
+        outline: 5px solid #fff;
+        outline-offset: -10px;
+        height: 100%;
+        width: 100%;
+        padding: 30px;
+    }
+
+    /* TYPOGRAPHY */
+    .cert-org {
+        font-family: 'Cinzel', serif;
+        letter-spacing: 5px;
+        color: #555;
+        font-size: 1rem;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+    }
+
+    .cert-title {
+        font-family: 'Cinzel', serif;
+        font-size: 3rem;
+        color: #2c3e50;
+        font-weight: 700;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        line-height: 1;
+        margin: 0;
+    }
+
+    .cert-text-italic {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.2rem;
+        font-style: italic;
+        color: #777;
+        margin-bottom: 15px;
+    }
+
+    .cert-name {
+        font-family: 'Great Vibes', cursive;
+        font-size: 4.5rem;
+        color: #d4af37;
+        line-height: 1.2;
+        padding: 0 20px;
+        margin-bottom: 15px;
+    }
+
+    .cert-text {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.2rem;
+        color: #777;
+        margin-bottom: 20px;
+    }
+
+    .cert-topic-wrapper {
+        margin-bottom: 20px;
+    }
+
+    .cert-topic {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2rem;
+        color: #2c3e50;
+        font-weight: 700;
+        border-bottom: 2px solid #d4af37;
+        display: inline-block;
+        padding-bottom: 5px;
+    }
+
+    .cert-date {
+        font-family: 'Cinzel', serif;
+        font-size: 0.9rem;
+        color: #999;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    /* FOOTER Elements */
+    .signature {
+        font-family: 'Great Vibes', cursive;
+        font-size: 2rem;
+        color: #2c3e50;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 5px;
+        display: inline-block;
+        min-width: 150px;
+    }
+
+    .signature-title {
+        font-family: 'Cinzel', serif;
+        font-size: 0.75rem;
+        font-weight: bold;
+        margin-top: 5px;
+    }
+
+    .seal-container {
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(45deg, #FFD700, #DAA520, #FFD700);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 5px 15px rgba(218, 165, 32, 0.4);
+        position: relative;
+        z-index: 10;
+    }
+
+    .seal-inner {
+        width: 85px;
+        height: 85px;
+        border: 2px dashed #B8860B;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-family: 'Cinzel', serif;
+        font-weight: bold;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        font-size: 0.9rem;
+        text-align: center;
+        line-height: 1.1;
+    }
+
+    .ribbon-tail {
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-top: 25px solid #DAA520;
+    }
+
+    .cert-id {
+        font-size: 0.7rem;
+        font-family: monospace;
+    }
+
+    /* RESPONSIVE STYLES */
+    @media (max-width: 768px) {
+        .certificate-outer {
+            aspect-ratio: auto;
+            border-width: 5px;
+            padding: 20px;
+            height: auto;
+        }
+
+        .certificate-inner {
+            padding: 15px;
+            border-width: 1px;
+            outline-width: 2px;
+            outline-offset: -5px;
+        }
+
+        .cert-title {
+            font-size: 1.8rem;
+        }
+
+        .cert-org {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .cert-name {
+            font-size: 2.5rem;
+        }
+
+        .cert-topic {
+            font-size: 1.5rem;
+        }
+
+        .cert-text,
+        .cert-text-italic {
+            font-size: 1rem;
+        }
+
+        /* Stack signatures */
+        .cert-footer {
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .seal-container {
+            width: 80px;
+            height: 80px;
+        }
+
+        .seal-inner {
+            width: 70px;
+            height: 70px;
+            font-size: 0.7rem;
+        }
+
+        .signature {
+            font-size: 1.5rem;
+        }
+    }
+
+    /* PRINT STYLES */
+    @media print {
+        @page {
+            size: landscape;
+            margin: 0;
+        }
+
+        body * {
+            visibility: hidden;
+        }
+
+        .certificate-wrapper,
+        .certificate-wrapper * {
+            visibility: visible;
+        }
+
+        .certificate-wrapper {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            max-width: none;
+        }
+
+        .certificate-outer {
+            width: 100%;
+            height: 100%;
+            border: 5px solid #2c3e50 !important;
+            box-shadow: none;
+            padding: 20px;
+        }
+
+        .d-print-none {
+            display: none !important;
+        }
+    }
+</style>
+{% endblock %}

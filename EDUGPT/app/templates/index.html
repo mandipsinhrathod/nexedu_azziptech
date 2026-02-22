@@ -1,0 +1,444 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- Enhanced Hero Section (Dark Theme Aligned) -->
+<div class="hero-section position-relative overflow-hidden">
+    <!-- Abstract Background Shapes (Subtle) -->
+    <div class="position-absolute top-0 end-0 rounded-circle bg-primary opacity-10"
+        style="width: 400px; height: 400px; transform: translate(30%, -30%); filter: blur(60px); opacity: 0.15;"></div>
+    <div class="position-absolute bottom-0 start-0 rounded-circle bg-danger opacity-10"
+        style="width: 300px; height: 300px; transform: translate(-30%, 30%); filter: blur(60px); opacity: 0.15;"></div>
+
+    <div class="container position-relative z-1 py-5">
+        <div class="row align-items-center">
+            <!-- Text Content -->
+            <div class="col-lg-6 text-lg-start text-center mb-5 mb-lg-0 slide-in-bottom">
+
+                <span
+                    class="badge bg-white bg-opacity-10 text-white rounded-pill px-3 py-2 mb-3 fw-bold border border-white border-opacity-25 shadow-sm">
+                    <i class="bi bi-stars me-1 text-warning"></i> AI-Powered Learning
+                </span>
+
+                <h1 class="display-3 fw-bolder mb-3 text-white lh-tight">
+                    Master Skills 10x Faster with <span
+                        style="background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">EduGPT</span>
+                </h1>
+
+                <p class="lead text-white-50 mb-5 pe-lg-5" style="font-weight: 300;">
+                    Personalized curriculums, adaptive mentors, and a community of learners.
+                    Unlock your potential with the world's most advanced AI tutor.
+                </p>
+            </div>
+
+            <!-- Hero Image/Illustration (Fixed) -->
+            <div class="col-lg-6 text-center position-relative d-none d-lg-block">
+                <!-- Glowing Backdrop -->
+                <div class="position-absolute top-50 start-50 translate-middle w-75 h-75 bg-primary rounded-circle opacity-25 shadow-lg"
+                    style="filter: blur(80px); z-index: -1;"></div>
+
+                <!-- Main Image -->
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80"
+                    alt="EduGPT AI Learning"
+                    class="img-fluid floating-animation position-relative z-index-1 rounded-4 shadow-lg border border-white border-opacity-10"
+                    style="transform: rotate(-2deg); max-width: 85%;">
+
+                <!-- Floating Cards Stats -->
+                <div class="position-absolute top-0 end-0 bg-dark p-3 rounded-4 shadow-lg floating-card-1 text-start border border-white border-opacity-10"
+                    style="max-width: 180px; margin-top: 50px; right: 20px;">
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="bg-success-soft text-success rounded-circle p-2 me-2"><i
+                                class="bi bi-graph-up-arrow"></i></div>
+                        <span class="fw-bold small text-white">Trending</span>
+                    </div>
+                    <h6 class="mb-0 fw-bold text-white">Python & AI</h6>
+                    <small class="text-white-50">12k+ enrolled</small>
+                </div>
+
+                <div class="position-absolute bottom-0 start-0 bg-white p-3 rounded-4 shadow-lg floating-card-2 text-start"
+                    style="max-width: 220px; margin-bottom: 50px; margin-left: 0px;">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="avatar-group d-flex">
+                            <div class="bg-primary text-white rounded-circle border border-2 border-white d-flex align-items-center justify-content-center fw-bold shadow-sm"
+                                style="width: 35px; height: 35px; font-size: 10px;">JP</div>
+                            <div class="bg-warning text-white rounded-circle border border-2 border-white d-flex align-items-center justify-content-center fw-bold shadow-sm"
+                                style="width: 35px; height: 35px; margin-left: -10px; font-size: 10px;">AS</div>
+                        </div>
+                        <div>
+                            <div class="fw-bold small text-dark">Expert Mentors</div>
+                            <div class="text-warning small"><i class="bi bi-star-fill"></i> 4.9/5 Rating</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Banner -->
+<div class="container d-none d-lg-block">
+    <div class="bg-white p-4 shadow-lg border rounded-4 position-relative z-2 mx-auto"
+        style="margin-top: -60px; max-width: 900px;">
+        <div class="row text-center align-items-center">
+            <div class="col-md-3 border-end">
+                <h2 class="fw-bold mb-0 text-primary">15k+</h2>
+                <small class="text-muted text-uppercase fw-bold ls-1">Students</small>
+            </div>
+            <div class="col-md-3 border-end">
+                <h2 class="fw-bold mb-0 text-primary">120+</h2>
+                <small class="text-muted text-uppercase fw-bold ls-1">Courses</small>
+            </div>
+            <div class="col-md-3 border-end">
+                <h2 class="fw-bold mb-0 text-primary">50+</h2>
+                <small class="text-muted text-uppercase fw-bold ls-1">Mentors</small>
+            </div>
+            <div class="col-md-3">
+                <h2 class="fw-bold mb-0 text-primary">4.9</h2>
+                <div class="text-warning small"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                        class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <small class="text-muted text-uppercase fw-bold ls-1">Rating</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Explore Section -->
+<div class="explore-section py-5 bg-light">
+    <div class="container text-center py-4">
+        <h2 class="fw-bold mb-4" style="color: #1e3c72;">Explore Our Website</h2>
+        <div class="row g-4 justify-content-center mt-2">
+            <div class="col-md-4">
+                <a href="#courses" class="text-decoration-none">
+                    <div class="p-4 bg-white rounded-4 shadow-sm hover-scale border h-100">
+                        <i class="bi bi-book text-primary fs-1 mb-3"></i>
+                        <h5 class="fw-bold text-dark">Browse Courses</h5>
+                        <p class="text-muted small mb-0">Discover our latest AI-driven curriculum paths.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="http://localhost:5173" class="text-decoration-none" target="_blank">
+                    <div class="p-4 bg-white rounded-4 shadow-sm hover-scale border h-100">
+                        <i class="bi bi-cpu text-success fs-1 mb-3"></i>
+                        <h5 class="fw-bold text-dark">AI Mentors Hub</h5>
+                        <p class="text-muted small mb-0">Jump into NexEdu's multi-agent cognitive sessions.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/register" class="text-decoration-none">
+                    <div class="p-4 bg-white rounded-4 shadow-sm hover-scale border h-100">
+                        <i class="bi bi-person-plus text-warning fs-1 mb-3"></i>
+                        <h5 class="fw-bold text-dark">Join Community</h5>
+                        <p class="text-muted small mb-0">Sign up and learn with thousands of students.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Courses Section -->
+<div class="courses-section pt-5 pb-5" id="courses">
+    <div class="container pt-5">
+        <div class="row mb-5 justify-content-center">
+            <div class="col-lg-7 text-center section-title">
+                <span class="badge bg-primary-soft text-primary rounded-pill px-3 py-2 mb-2 fw-bold">CATALOG</span>
+                <h2 class="fw-bold mb-3"
+                    style="font-size: 36px; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    Explore Our Courses</h2>
+                <p class="text-muted lead">Top-rated curriculums designed by AI experts, updated daily to keep you
+                    ahead.</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            {% for course in catalog_courses %}
+            <div class="col-lg-4 col-md-6">
+                <!-- Course Card -->
+                <div
+                    class="course-card h-100 d-flex flex-column hover-lift shadow-sm border bg-white rounded-4 overflow-hidden position-relative group">
+                    <!-- Image -->
+                    <div class="course-thumb position-relative overflow-hidden" style="height: 220px;">
+                        <img src="{{ course.image }}" alt="{{ course.title }}" class="course-img w-100 h-100"
+                            style="object-fit: cover; transition: transform 0.6s ease;">
+                        <div
+                            class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-0 group-hover-opacity transition-all">
+                        </div>
+
+                        {% if course.badge %}
+                        <div class="position-absolute top-0 start-0 m-3">
+                            <span class="badge bg-white text-dark shadow-sm fw-bold px-3 py-2 border rounded-pill">
+                                <i class="bi bi-lightning-fill text-warning me-1"></i> {{ course.badge }}
+                            </span>
+                        </div>
+                        {% endif %}
+
+                        <div class="position-absolute bottom-0 end-0 m-3">
+                            <span class="badge bg-dark bg-opacity-75 backdrop-blur rounded-pill px-3 py-2">{{
+                                course.level }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="p-4 d-flex flex-column flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="text-warning small">
+                                <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i
+                                    class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i
+                                    class="bi bi-star-half"></i>
+                                <span class="text-muted ms-1">(4.8)</span>
+                            </div>
+                            <div class="text-muted small"><i class="bi bi-book me-1"></i> 5 Modules</div>
+                        </div>
+
+                        <h5 class="fw-bold mb-2 text-dark">{{ course.title }}</h5>
+                        <p class="text-muted small mb-4 flex-grow-1 line-clamp-2">{{ course.desc }}</p>
+
+                        <!-- Buttons -->
+                        <div class="mt-auto d-grid gap-2">
+                            <button type="button" class="btn btn-light rounded-pill fw-bold border text-primary"
+                                onclick='showSyllabus({{ course.title|tojson }}, {{ course.syllabus|tojson }})'>
+                                <i class="bi bi-journal-text me-2"></i>View Syllabus
+                            </button>
+
+                            <form action="/start_course" method="POST" class="d-grid">
+                                <input type="hidden" name="topic" value="{{ course.title }}">
+                                <input type="hidden" name="level" value="{{ course.level }}">
+                                <input type="hidden" name="goal" value="Career">
+                                <input type="hidden" name="style" value="Visual">
+                                <button type="submit" class="btn btn-primary rounded-pill fw-bold shadow-sm py-2">
+                                    Start Learning
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="#" class="btn btn-outline-primary rounded-pill px-5 py-3 fw-bold">View All 120+ Courses</a>
+        </div>
+    </div>
+</div>
+
+<!-- Features / Trust Section -->
+<div class="py-5 bg-white border-top">
+    <div class="container text-center">
+        <p class="text-muted text-uppercase fw-bold mb-4 small ls-1">Trusted by learners from top companies</p>
+        <div class="d-flex justify-content-center flex-wrap gap-5 opacity-50 grayscale-logos">
+            <h4 class="fw-bold text-muted mb-0"><i class="bi bi-google"></i> Google</h4>
+            <h4 class="fw-bold text-muted mb-0"><i class="bi bi-microsoft"></i> Microsoft</h4>
+            <h4 class="fw-bold text-muted mb-0"><i class="bi bi-spotify"></i> Spotify</h4>
+            <h4 class="fw-bold text-muted mb-0"><i class="bi bi-amazon"></i> Amazon</h4>
+            <h4 class="fw-bold text-muted mb-0"><i class="bi bi-meta"></i> Meta</h4>
+        </div>
+    </div>
+</div>
+
+<!-- Simple Footer -->
+<footer class="bg-dark text-white py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <h3 class="fw-bold mb-3">Edu<span class="text-primary">GPT</span></h3>
+                <p class="text-white-50 small mb-4">The world's first AI-powered learning platform that adapts to
+                    your
+                    unique learning style.</p>
+                <div class="d-flex gap-3">
+                    <a href="#" class="text-white opacity-75 hover-opacity"><i class="bi bi-twitter fs-5"></i></a>
+                    <a href="#" class="text-white opacity-75 hover-opacity"><i class="bi bi-linkedin fs-5"></i></a>
+                    <a href="#" class="text-white opacity-75 hover-opacity"><i class="bi bi-github fs-5"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-6">
+                <h6 class="fw-bold mb-3 text-uppercase small ls-1 text-white-50">Platform</h6>
+                <ul class="list-unstyled text-white-50 small d-flex flex-column gap-2">
+                    <li><a href="#" class="text-decoration-none text-white-50 hover-white">Browse Courses</a></li>
+                    <li><a href="#" class="text-decoration-none text-white-50 hover-white">Mentorship</a></li>
+                    <li><a href="#" class="text-decoration-none text-white-50 hover-white">Pricing</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-6">
+                <h6 class="fw-bold mb-3 text-uppercase small ls-1 text-white-50">Company</h6>
+                <ul class="list-unstyled text-white-50 small d-flex flex-column gap-2">
+                    <li><a href="#" class="text-decoration-none text-white-50 hover-white">About Us</a></li>
+                    <li><a href="#" class="text-decoration-none text-white-50 hover-white">Careers</a></li>
+                    <li><a href="#" class="text-decoration-none text-white-50 hover-white">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4">
+                <h6 class="fw-bold mb-3 text-uppercase small ls-1 text-white-50">Stay Updated</h6>
+                <form class="d-flex gap-2">
+                    <input type="email" class="form-control rounded-pill border-0 bg-white bg-opacity-10 text-white"
+                        placeholder="Email address">
+                    <button class="btn btn-primary rounded-pill px-4">Join</button>
+                </form>
+            </div>
+        </div>
+        <div class="border-top border-white border-opacity-10 mt-5 pt-4 text-center text-white-50 small">
+            &copy; 2026 EduGPT Inc. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+<!-- Syllabus Modal -->
+<div class="modal fade" id="syllabusModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+            <div class="modal-header border-0 pb-0 bg-light pt-4 px-4 sticky-top rounded-top-4">
+                <div>
+                    <span class="badge bg-primary-soft text-primary rounded-pill px-2 py-1 mb-2 fw-bold small">COURSE
+                        MAP</span>
+                    <h4 class="modal-title fw-bold text-dark" id="syllabusModalLabel">Course Syllabus</h4>
+                </div>
+                <button type="button" class="btn-close bg-white p-2 shadow-sm rounded-circle" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4 bg-light">
+                <div class="timeline-section p-2" id="syllabusList">
+                    <!-- Dynamic Content -->
+                </div>
+            </div>
+            <div class="modal-footer border-0 pt-0 bg-light pb-4 px-4">
+                <form action="/start_course" method="POST" id="modalStartForm" class="w-100">
+                    <input type="hidden" name="topic" id="modalTopicInput">
+                    <input type="hidden" name="level" value="Beginner">
+                    <input type="hidden" name="goal" value="Career">
+                    <input type="hidden" name="style" value="Visual">
+                    <button type="submit" class="btn btn-primary rounded-pill w-100 py-3 fw-bold shadow-lg hover-lift">
+                        Start Learning Now <i class="bi bi-arrow-right ms-2"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showSyllabus(title, syllabus) {
+        document.getElementById('syllabusModalLabel').innerText = title;
+        document.getElementById('modalTopicInput').value = title;
+
+        const list = document.getElementById('syllabusList');
+        list.innerHTML = '';
+
+        // Creative Timeline Logic
+        syllabus.forEach((item, index) => {
+            const div = document.createElement('div');
+            // Animation class for staggered entry
+            div.className = 'd-flex mb-4 position-relative timeline-item slide-in-bottom';
+            div.style.animationDelay = (index * 0.1) + 's';
+
+            div.innerHTML = `
+                <div class="me-4 d-flex flex-column align-items-center" style="min-width: 40px;">
+                    <div class="rounded-circle shadow-lg d-flex align-items-center justify-content-center fw-bold text-white fs-5" 
+                         style="width: 40px; height: 40px; background: linear-gradient(135deg, #4e73df 0%, #224abe 100%); z-index: 2; border: 3px solid white;">
+                         ${index + 1}
+                    </div>
+                    ${index < syllabus.length - 1 ?
+                    '<div class="position-absolute" style="width: 4px; background: #dfe2e6; top: 40px; bottom: -24px; left: 18px; z-index: 1; border-radius: 2px;"></div>'
+                    : ''}
+                </div>
+                <!-- Box -->
+                <div class="bg-white p-3 rounded-4 shadow-sm border-0 flex-grow-1 position-relative hover-scale cursor-pointer" style="top: -2px;">
+                    <p class="mb-0 fw-bold text-dark" style="font-size: 1rem;">${item}</p>
+                    <small class="text-muted">Module ${index + 1}</small>
+                </div>
+            `;
+            list.appendChild(div);
+        });
+
+        new bootstrap.Modal(document.getElementById('syllabusModal')).show();
+    }
+</script>
+
+<style>
+    /* New Animations & Styles */
+    .floating-animation {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-card-1 {
+        animation: float 5s ease-in-out infinite;
+    }
+
+    .floating-card-2 {
+        animation: float 7s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-20px);
+        }
+
+        100% {
+            transform: translateY(0px);
+        }
+    }
+
+    .ls-1 {
+        letter-spacing: 1px;
+    }
+
+    .bg-success-soft {
+        background-color: rgba(25, 135, 84, 0.1);
+    }
+
+    .text-success-soft {
+        color: #198754;
+    }
+
+    /* Course Card Specifics */
+    .course-card:hover .course-img {
+        transform: scale(1.1);
+    }
+
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Timeline Animations */
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .slide-in-bottom {
+        animation: slideInUp 0.5s ease forwards;
+        opacity: 0;
+    }
+
+    .hover-scale {
+        transition: transform 0.2s;
+    }
+
+    .hover-scale:hover {
+        transform: scale(1.02);
+    }
+
+    /* Footer */
+    .hover-opacity:hover {
+        opacity: 1 !important;
+    }
+
+    .hover-white:hover {
+        color: white !important;
+    }
+</style>
+{% endblock %}

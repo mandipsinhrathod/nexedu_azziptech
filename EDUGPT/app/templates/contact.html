@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="page-header-block">
+    <div class="container text-center">
+        <div class="breadcrumb-custom">Get in Touch</div>
+        <h1 class="page-title">Contact Us</h1>
+        <p class="page-subtitle">We'd love to hear from you</p>
+    </div>
+</div>
+
+<div class="courses-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="expert-card p-5">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-muted fw-bold small text-uppercase">Name</label>
+                                <input type="text" class="form-control hero-input w-100"
+                                    style="background: #f8f9fa; border: 1px solid #eee;">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-muted fw-bold small text-uppercase">Email</label>
+                                <input type="email" class="form-control hero-input w-100"
+                                    style="background: #f8f9fa; border: 1px solid #eee;">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label text-muted fw-bold small text-uppercase">Message</label>
+                            <textarea class="form-control" rows="5"
+                                style="border: 1px solid #eee; background: #f8f9fa; border-radius: 4px; padding: 15px;"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-signup">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

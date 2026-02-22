@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="page-header-block text-center position-relative">
+    <div class="container">
+        <span class="badge bg-warning text-dark mb-2 text-uppercase" style="letter-spacing: 2px;">Evaluation
+            Phase</span>
+        <h1 class="page-title">{{ module.module_title }} Quiz</h1>
+        <p class="page-subtitle">Answer correctly to unlock the next module</p>
+    </div>
+</div>
+
+<div class="courses-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <form action="{{ url_for('submit_quiz', module_id=module.id) }}" method="POST" id="quizForm">
+
+                    {% for q in questions %}
+                    <div class="expert-card p-4 mb-4">
+                        <h5 class="fw-bold mb-3">Q{{ loop.index }}: {{ q.text }}</h5>
+
+                        <div class="list-group">
+                            {% for option in q.options %}
+                            <label class="list-group-item list-group-item-action">
+                                <input class="form-check-input me-1" type="radio" name="q{{ q.id }}"
+                                    value="{{ loop.index }}" required>
+                                {{ option }}
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <div class="text-center mt-5">
+                        <button type="submit" class="btn btn-signup btn-lg px-5 shadow">Submit & Complete
+                            Module</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="page-header-block">
+    <div class="container text-center">
+        <div class="breadcrumb-custom">Lesson</div>
+        <h1 class="page-title">{{ lesson.title }}</h1>
+        <p class="page-subtitle">Module: {{ module.module_title }}</p>
+    </div>
+</div>
+
+<div class="courses-section">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar (Lesson Tools) -->
+            <div class="col-lg-3 mb-5">
+                <div class="expert-card sticky-top" style="top: 100px;">
+                    <div class="expert-header">Instructor Tools</div>
+                    <div class="p-3">
+                        <button class="btn btn-secondary-custom w-100 mb-2 btn-sm text-start"
+                            style="justify-content: flex-start;">
+                            <span class="me-2">🤔</span> Ask Doubt
+                        </button>
+                        <button class="btn btn-secondary-custom w-100 mb-2 btn-sm text-start"
+                            style="justify-content: flex-start;">
+                            <span class="me-2">💡</span> Generate Example
+                        </button>
+                        <button class="btn btn-secondary-custom w-100 btn-sm text-start"
+                            style="justify-content: flex-start;">
+                            <span class="me-2">📝</span> Take Notes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lesson Content -->
+            <div class="col-lg-9">
+                <div class="expert-card p-5 border-0 shadow-lg">
+                    <!-- Raw content hidden for parsing -->
+                    <div id="raw-content" style="display:none;">{{ lesson.content }}</div>
+
+                    <!-- Rendered Markdown -->
+                    <div class="lesson-content typography-blog" id="lesson-markdown"></div>
+
+                    <script>
+                        const rawContent = document.getElementById('raw-content').textContent;
+                        document.getElementById('lesson-markdown').innerHTML = marked.parse(rawContent);
+                    </script>
+
+                    <hr class="my-5" style="border-top: 2px solid #f0f0f0;">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="/syllabus/{{ module.course_id }}" class="text-secondary text-decoration-none fw-bold">
+                            &larr; Back to Syllabus
+                        </a>
+
+                        <form action="/complete_lesson/{{ lesson.id }}" method="POST">
+                            <button type="submit" class="btn btn-signup">
+                                Complete & Next Module &rarr;
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Typography improvements for Lesson Content */
+    .typography-blog h1,
+    .typography-blog h2,
+    .typography-blog h3 {
+        margin-top: 1.5em;
+        margin-bottom: 0.8em;
+        font-weight: 700;
+        color: #333;
+    }
+
+    .typography-blog p {
+        font-size: 18px;
+        line-height: 1.8;
+        color: #555;
+        margin-bottom: 1.5em;
+    }
+
+    .typography-blog ul,
+    .typography-blog ol {
+        padding-left: 20px;
+        font-size: 18px;
+        line-height: 1.8;
+        color: #555;
+        margin-bottom: 1.5em;
+    }
+
+    .typography-blog code {
+        background: #f4f4f4;
+        padding: 2px 5px;
+        border-radius: 4px;
+        color: #d82a4e;
+        font-family: monospace;
+    }
+
+    .typography-blog pre {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 20px;
+        border-radius: 8px;
+        overflow-x: auto;
+    }
+
+    .typography-blog pre code {
+        background: transparent;
+        color: inherit;
+        padding: 0;
+    }
+
+    .typography-blog blockquote {
+        border-left: 4px solid #d82a4e;
+        padding-left: 20px;
+        font-style: italic;
+        color: #777;
+        margin: 20px 0;
+    }
+</style>
+{% endblock %}

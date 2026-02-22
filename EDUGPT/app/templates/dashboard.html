@@ -1,0 +1,680 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="page-header-block d-flex align-items-center"
+    style="min-height: 160px; padding-top: 80px; padding-bottom: 30px; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white;">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="page-title text-white mb-1">Dashboard</h1>
+                <p class="page-subtitle text-white-50 mb-0">Welcome back, {{ user.username }}! Ready to learn?</p>
+            </div>
+            <div class="text-end d-none d-md-block">
+                <div class="d-flex align-items-center bg-white bg-opacity-10 rounded-pill px-4 py-2 backdrop-blur">
+                    <span class="fs-4 me-2">🔥</span>
+                    <div>
+                        <div class="fw-bold lh-1">{{ streak }} Day Streak</div>
+                        <small class="text-white-50" style="font-size: 0.75rem;">Keep it up!</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-section pt-5 pb-5">
+    <div class="container">
+
+        <!-- Quick Stats Row -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+                <div class="expert-card p-4 d-flex align-items-center hover-lift transition-all">
+                    <div class="icon-box bg-primary-soft text-primary rounded-circle me-3 d-flex align-items-center justify-content-center"
+                        style="width: 50px; height: 50px;">
+                        <i class="bi bi-lightning-fill fs-4"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-bold mb-0">{{ user.learning_points }}</h3>
+                        <p class="text-muted small mb-0">Learning Points</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="expert-card p-4 d-flex align-items-center hover-lift transition-all">
+                    <div class="icon-box bg-success-soft text-success rounded-circle me-3 d-flex align-items-center justify-content-center"
+                        style="width: 50px; height: 50px;">
+                        <i class="bi bi-journal-album fs-4"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-bold mb-0">{{ courses|length }}</h3>
+                        <p class="text-muted small mb-0">Active Courses</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <!-- Create New Course CTA -->
+                <div class="expert-card p-4 bg-primary text-white hover-lift transition-all cursor-pointer"
+                    onclick="document.getElementById('createCourseModal').classList.add('show'); document.getElementById('createCourseModal').style.display='block'; document.body.classList.add('modal-open');">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h5 class="fw-bold mb-1">Start New Course</h5>
+                            <p class="small text-white-50 mb-0">AI-generated curriculum unique to you.</p>
+                        </div>
+                        <div class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                            style="width: 40px; height: 40px;">
+                            <i class="bi bi-plus-lg fw-bold"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Left Sidebar -->
+            <div class="col-lg-4">
+                <!-- Profile Card -->
+                <div class="expert-card p-0 mb-4 overflow-hidden position-relative h-100">
+                    <div class="bg-light p-4 text-center border-bottom position-relative overflow-hidden">
+                        <!-- Background Pattern -->
+                        <div
+                            style="position: absolute; top: 0; left: 0; right: 0; height: 100%; opacity: 0.05; background-image: radial-gradient(#444 1px, transparent 1px); background-size: 10px 10px;">
+                        </div>
+
+                        <div class="position-relative z-1">
+                            <div class="mb-3 position-relative d-inline-block">
+                                <div
+                                    style="width: 90px; height: 90px; background: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; color: white; font-size: 36px; font-weight: bold; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                                    {{ user.username[0]|upper }}
+                                </div>
+                                <span
+                                    class="position-absolute bottom-0 end-0 bg-success border border-2 border-white rounded-circle p-2"
+                                    title="Online"></span>
+                            </div>
+
+                            <h5 class="fw-bold mb-1">{{ user.username }}</h5>
+
+                            <!-- Rank Logic & Progress -->
+                            {% set points = user.learning_points %}
+                            {% set next_rank_points = 100 %}
+                            {% set current_rank = 'Novice' %}
+                            {% set rank_icon = '🌱' %}
+
+                            {% if points >= 2000 %}
+                            {% set next_rank_points = 5000 %}
+                            {% set current_rank = 'Grandmaster' %}
+                            {% set rank_icon = '👑' %}
+                            {% elif points >= 1000 %}
+                            {% set next_rank_points = 2000 %}
+                            {% set current_rank = 'Master Mentor' %}
+                            {% set rank_icon = '🧙‍♂️' %}
+                            {% elif points >= 500 %}
+                            {% set next_rank_points = 1000 %}
+                            {% set current_rank = 'Gold Achiever' %}
+                            {% set rank_icon = '🥇' %}
+                            {% elif points >= 100 %}
+                            {% set next_rank_points = 500 %}
+                            {% set current_rank = 'Silver Scholar' %}
+                            {% set rank_icon = '🥈' %}
+                            {% endif %}
+
+                            {% set progress_pct = (points / next_rank_points) * 100 %}
+                            {% if progress_pct > 100 %}{% set progress_pct = 100 %}{% endif %}
+
+                            <div class="badge bg-dark text-white rounded-pill px-3 mb-2">{{ rank_icon }} {{ current_rank
+                                }}</div>
+
+                            <p class="text-muted small mb-3 fst-italic">"{{ user.bio if user.bio else 'Passionate about
+                                learning.' }}"</p>
+
+                            <!-- Level Progress -->
+                            <div class="px-3">
+                                <div class="d-flex justify-content-between small fw-bold text-muted mb-1">
+                                    <span>XP Progress</span>
+                                    <span>{{ points }} / {{ next_rank_points }}</span>
+                                </div>
+                                <div class="progress"
+                                    style="height: 6px; background-color: #e9ecef; border-radius: 10px;">
+                                    <div class="progress-bar bg-primary" role="progressbar"
+                                        style="width: {{ progress_pct }}%; border-radius: 10px;"></div>
+                                </div>
+                                <div class="text-end mt-1">
+                                    <small class="text-primary-soft fw-bold" style="font-size: 10px;">{{
+                                        next_rank_points - points }} pts to next rank</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-white">
+                        <a href="{{ url_for('edit_profile') }}"
+                            class="btn btn-outline-dark w-100 btn-sm rounded-pill"><i class="bi bi-gear-fill me-1"></i>
+                            Edit Profile</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="col-lg-8">
+
+                <!-- Resume Learning Hero (Most recent unfinished course) -->
+                {% set active_course = None %}
+                {% for c in courses %}
+                {% if c.progress < 100 and active_course is none %} {% set active_course=c %} {% endif %} {% endfor %}
+                    {% if active_course %} <div
+                    class="expert-card p-4 mb-4 border-start border-5 border-primary bg-white position-relative overflow-hidden mb-4">
+                    <div
+                        class="d-flex flex-column flex-md-row align-items-center justify-content-between position-relative z-1">
+                        <div class="flex-grow-1 pe-md-4 mb- mb-md-0">
+                            <span class="badge bg-primary-soft text-primary mb-2">Continue Learning</span>
+                            <h3 class="fw-bold mb-2">{{ active_course.topic }}</h3>
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="progress flex-grow-1 me-3" style="height: 8px;">
+                                    <div class="progress-bar bg-primary" role="progressbar"
+                                        style="width: {{ active_course.progress }}%"></div>
+                                </div>
+                                <span class="small fw-bold text-muted">{{ active_course.progress }}%</span>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="/syllabus/{{ active_course.id }}"
+                                    class="btn btn-primary rounded-pill px-4">Resume Course &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            {% endif %}
+
+            <!-- Badges and Analytics Row (Side by Side) -->
+            <div class="row g-4 mb-4">
+                <!-- Achievements / Badges -->
+                <div class="col-lg-6">
+                    <div class="expert-card p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="fw-bold text-uppercase text-muted small mb-0">Badges Collection</h6>
+                            <span class="badge bg-light text-dark rounded-pill border">{{ user.learning_points }}
+                                XP</span>
+                        </div>
+
+                        <div class="row g-2">
+                            <!-- Define Badge List -->
+                            {% set badge_list = [
+                            {'name': 'Starter', 'icon': '🚀', 'desc': 'Joined the platform', 'points': 0},
+                            {'name': 'Scholar', 'icon': '📚', 'desc': 'Earned 100+ Points', 'points': 100},
+                            {'name': 'Achiever', 'icon': '🔥', 'desc': 'Earned 500+ Points', 'points': 500},
+                            {'name': 'Master', 'icon': '👑', 'desc': 'Earned 1000+ Points', 'points': 1000},
+                            {'name': 'Legend', 'icon': '💎', 'desc': 'Earned 2000+ Points', 'points': 2000}
+                            ] %}
+
+                            {% for badge in badge_list %}
+                            {% set is_unlocked = user.learning_points >= badge.points %}
+                            <div class="col-4">
+                                <div class="badge-item text-center p-2 rounded bg-light h-100 d-flex flex-column align-items-center justify-content-center {{ 'locked' if not is_unlocked else '' }}"
+                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="{{ badge.desc if is_unlocked else 'Locked: ' + badge.desc }}">
+
+                                    <div class="position-relative">
+                                        <div class="fs-4 mb-1">{{ badge.icon }}</div>
+                                        {% if not is_unlocked %}
+                                        <div class="lock-overlay"><i class="bi bi-lock-fill"></i></div>
+                                        {% endif %}
+                                    </div>
+                                    <div style="font-size: 10px;" class="fw-bold text-muted lh-sm">{{ badge.name }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <!-- Streak Badge (Separate Logic) -->
+                            <div class="col-4">
+                                <div class="badge-item text-center p-2 rounded bg-light h-100 d-flex flex-column align-items-center justify-content-center {{ 'locked' if streak < 3 else '' }}"
+                                    data-bs-toggle="tooltip"
+                                    title="{{ 'Locked: Need 3 day streak' if streak < 3 else '3+ Day Streak!' }}">
+                                    <div class="position-relative">
+                                        <div class="fs-4 mb-1">⚡</div>
+                                        {% if streak < 3 %} <div class="lock-overlay"><i class="bi bi-lock-fill"></i>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div style="font-size: 10px;" class="fw-bold text-muted lh-sm">Reliable</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Chart -->
+            <div class="col-lg-6">
+                <div class="expert-card p-4 h-100">
+                    <h6 class="fw-bold text-uppercase text-muted small mb-3">Activity (Last 7 Days)</h6>
+                    <div style="height: 200px;">
+                        <canvas id="learningChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active rounded-pill px-4 me-2" id="pills-courses-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-courses" type="button" role="tab">My Courses</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link rounded-pill px-4" id="pills-activity-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-activity" type="button" role="tab">Recent Activity</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="pills-tabContent">
+
+            <!-- My Courses Tab -->
+            <div class="tab-pane fade show active" id="pills-courses" role="tabpanel">
+                {% if courses %}
+                <div class="row g-4">
+                    {% for course in courses %}
+                    <div class="col-md-6">
+                        <div class="expert-card h-100 p-4 d-flex flex-column hover-shadow transition-all group-hover">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="badge bg-light text-dark border">{{ course.level }}</span>
+                                {% if course.progress == 100 %}
+                                <i class="bi bi-patch-check-fill text-success fs-5"></i>
+                                {% endif %}
+                            </div>
+                            <h5 class="fw-bold mb-1">{{ course.topic }}</h5>
+                            <p class="text-muted small mb-3 flex-grow-1 text-truncate">{{ course.goal }}</p>
+
+                            <div class="mt-auto">
+                                {% if course.progress == 100 %}
+                                <a href="{{ url_for('view_certificate', course_id=course.id) }}"
+                                    class="btn btn-success-soft text-success w-100 rounded-pill btn-sm fw-bold">View
+                                    Certificate</a>
+                                {% else %}
+                                <div class="progress mb-3" style="height: 4px;">
+                                    <div class="progress-bar bg-primary" role="progressbar"
+                                        style="width: {{ course.progress }}%"></div>
+                                </div>
+                                <!-- Buttons -->
+                                <div class="d-flex gap-2">
+                                    <button type="button" class="btn btn-light w-50 rounded-pill btn-sm fw-bold border"
+                                        onclick="showSyllabus('{{ course.topic }}', {{ course.syllabus_list|tojson }})">
+                                        <i class="bi bi-list-task me-1"></i> Syllabus
+                                    </button>
+                                    <a href="/syllabus/{{ course.id }}"
+                                        class="btn btn-primary w-50 rounded-pill btn-sm fw-bold">Go to Class</a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <!-- Add New Placeholder -->
+                    <div class="col-md-6">
+                        <div class="expert-card h-100 p-4 d-flex flex-column align-items-center justify-content-center border-dashed text-center"
+                            style="border: 2px dashed #ddd; background: transparent; min-height: 200px; cursor: pointer;"
+                            onclick="document.getElementById('createCourseModal').classList.add('show'); document.getElementById('createCourseModal').style.display='block'; document.body.classList.add('modal-open');">
+                            <div class="text-muted mb-2"><i class="bi bi-plus-circle fs-2"></i></div>
+                            <h6 class="fw-bold text-muted">Add New Course</h6>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <img src="https://cdni.iconscout.com/illustration/premium/thumb/online-learning-4315024-3610750.png"
+                        alt="No courses" style="width: 200px; opacity: 0.8;">
+                    <h4 class="mt-3 text-muted">No courses yet?</h4>
+                    <p class="text-muted mb-4">Start your first AI-powered learning journey today.</p>
+                    <button class="btn btn-primary rounded-pill px-4"
+                        onclick="document.getElementById('createCourseModal').classList.add('show'); document.getElementById('createCourseModal').style.display='block'; document.body.classList.add('modal-open');">
+                        Create My First Course
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Activity Tab -->
+            <div class="tab-pane fade" id="pills-activity" role="tabpanel">
+                <div class="expert-card p-0">
+                    <div class="list-group list-group-flush">
+                        {% if activity %}
+                        {% for act in activity %}
+                        <div class="list-group-item p-4 border-bottom">
+                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <div class="rounded-circle bg-success-soft text-success d-flex align-items-center justify-content-center me-3"
+                                        style="width: 40px; height: 40px;">
+                                        <i class="bi bi-check-lg"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0 fw-bold">{{ act.lesson_title }}</h6>
+                                        <small class="text-muted">{{ act.course_topic }}</small>
+                                    </div>
+                                </div>
+                                <small class="text-muted">{{ act.completed_at.strftime('%Y-%m-%d') }}</small>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="p-5 text-center text-muted">No recent activity found.</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- AI Agents Status (New Section) -->
+        <div class="row g-4 mt-2">
+            <div class="col-12">
+                <hr class="text-muted opacity-25">
+                <h6 class="fw-bold text-uppercase text-muted small mb-3 mt-4">Your AI Learning Team</h6>
+            </div>
+            <!-- Curriculum Agent -->
+            <div class="col-md-6 col-lg-3">
+                <div class="expert-card p-3 text-center h-100 border transition-all hover-lift">
+                    <div class="mb-2 position-relative d-inline-block">
+                        <div class="bg-primary-soft text-primary rounded-circle d-flex align-items-center justify-content-center mx-auto"
+                            style="width: 40px; height: 40px;">
+                            <i class="bi bi-cpu fs-5"></i>
+                        </div>
+                        <span
+                            class="position-absolute bottom-0 end-0 p-1 bg-success border border-2 border-white rounded-circle"></span>
+                    </div>
+                    <h6 class="fw-bold mb-1" style="font-size: 14px;">Curriculum</h6>
+                    <small class="text-success fw-bold" style="font-size: 10px;">ACTIVE</small>
+                </div>
+            </div>
+            <!-- Instructor Agent -->
+            <div class="col-md-6 col-lg-3">
+                <div class="expert-card p-3 text-center h-100 border transition-all hover-lift">
+                    <div class="mb-2 position-relative d-inline-block">
+                        <div class="bg-info-soft text-info rounded-circle d-flex align-items-center justify-content-center mx-auto"
+                            style="width: 40px; height: 40px;">
+                            <i class="bi bi-person-video3 fs-5"></i>
+                        </div>
+                        <span
+                            class="position-absolute bottom-0 end-0 p-1 bg-success border border-2 border-white rounded-circle"></span>
+                    </div>
+                    <h6 class="fw-bold mb-1" style="font-size: 14px;">Instructor</h6>
+                    <small class="text-success fw-bold" style="font-size: 10px;">ACTIVE</small>
+                </div>
+            </div>
+            <!-- Assessment Agent -->
+            <div class="col-md-6 col-lg-3">
+                <div class="expert-card p-3 text-center h-100 border transition-all hover-lift">
+                    <div class="mb-2 position-relative d-inline-block">
+                        <div class="bg-warning-soft text-warning rounded-circle d-flex align-items-center justify-content-center mx-auto"
+                            style="width: 40px; height: 40px;">
+                            <i class="bi bi-clipboard-check fs-5"></i>
+                        </div>
+                        <span
+                            class="position-absolute bottom-0 end-0 p-1 bg-success border border-2 border-white rounded-circle"></span>
+                    </div>
+                    <h6 class="fw-bold mb-1" style="font-size: 14px;">Reviewer</h6>
+                    <small class="text-success fw-bold" style="font-size: 10px;">READY</small>
+                </div>
+            </div>
+            <!-- Analytics Agent -->
+            <div class="col-md-6 col-lg-3">
+                <div class="expert-card p-3 text-center h-100 border transition-all hover-lift">
+                    <div class="mb-2 position-relative d-inline-block">
+                        <div class="bg-danger-soft text-danger rounded-circle d-flex align-items-center justify-content-center mx-auto"
+                            style="width: 40px; height: 40px;">
+                            <i class="bi bi-graph-up fs-5"></i>
+                        </div>
+                        <span
+                            class="position-absolute bottom-0 end-0 p-1 bg-success border border-2 border-white rounded-circle"></span>
+                    </div>
+                    <h6 class="fw-bold mb-1" style="font-size: 14px;">Analyst</h6>
+                    <small class="text-success fw-bold" style="font-size: 10px;">MONITORING</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+</div>
+
+<!-- Simple Create Course Modal (Embedded directly for simplicity) -->
+<div class="modal fade" id="createCourseModal" tabindex="-1" aria-hidden="true" style="background: rgba(0,0,0,0.5);">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">Design New Course</h5>
+                <button type="button" class="btn-close"
+                    onclick="document.getElementById('createCourseModal').classList.remove('show'); document.getElementById('createCourseModal').style.display='none'; document.body.classList.remove('modal-open');"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form action="/start_course" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-bold">What do you want to learn?</label>
+                        <input type="text" name="topic" class="form-control form-control-lg bg-light border-0"
+                            placeholder="e.g. Python, History of Jazz, Quantum Physics..." required>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-6">
+                            <label class="form-label text-muted small fw-bold">Current Level</label>
+                            <select name="level" class="form-select border-0 bg-light">
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label text-muted small fw-bold">Learning Style</label>
+                            <select name="style" class="form-select border-0 bg-light">
+                                <option value="Visual">Visual (Images/Diagrams)</option>
+                                <option value="Text-based">Text-based (Reading)</option>
+                                <option value="Interactive">Interactive (Quizzes)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label text-muted small fw-bold">Goal</label>
+                        <select name="goal" class="form-select border-0 bg-light">
+                            <option value="Casual">Casual Interest</option>
+                            <option value="Career">Career/Professional</option>
+                            <option value="Academic">Academic/Exam Prep</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 rounded-pill py-2 fw-bold">Generate Syllabus
+                        ✨</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Syllabus Modal for Dashboard -->
+<div class="modal fade" id="syllabusModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+            <div class="modal-header border-0 pb-0 bg-light pt-4 px-4">
+                <div>
+                    <h4 class="modal-title fw-bold text-primary" id="syllabusModalLabel">Course Syllabus</h4>
+                    <p class="text-muted small mb-0">Your learning path</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4 bg-light">
+                <div class="timeline-section p-2" id="syllabusList">
+                    <!-- Dynamic Content -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialize Tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
+        // Chart Data
+        const chartData = {{ chart_data| safe
+    }};
+    const chartLabels = {{ chart_labels| safe }};
+    const ctx = document.getElementById('learningChart');
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: chartLabels,
+                datasets: [{
+                    label: 'Lessons Completed',
+                    data: chartData,
+                    backgroundColor: '#4e73df',
+                    hoverBackgroundColor: '#2e59d9',
+                    borderRadius: 4,
+                    maxBarThickness: 30
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 },
+                        grid: { borderDash: [2, 2], drawBorder: false }
+                    },
+                    x: { display: false } // Hide X labels for cleaner mobile view or keep? Kept hidden for "clean" look
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+    }
+    });
+
+    // Reuse the creative Syllabus Modal logic
+    function showSyllabus(title, syllabus) {
+        document.getElementById('syllabusModalLabel').innerText = title;
+        const list = document.getElementById('syllabusList');
+        list.innerHTML = '';
+
+        if (!syllabus || syllabus.length === 0) {
+            list.innerHTML = '<div class="text-center text-muted p-5">No syllabus data available yet.</div>';
+        } else {
+            // Creative Timeline Logic
+            syllabus.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'd-flex mb-4 position-relative timeline-item slide-in-bottom';
+                div.style.animationDelay = (index * 0.1) + 's';
+
+                div.innerHTML = `
+                    <div class="me-4 d-flex flex-column align-items-center" style="min-width: 40px;">
+                        <div class="rounded-circle shadow-lg d-flex align-items-center justify-content-center fw-bold text-white fs-5" 
+                             style="width: 40px; height: 40px; background: linear-gradient(135deg, #4e73df 0%, #224abe 100%); z-index: 2; border: 3px solid white;">
+                             ${index + 1}
+                        </div>
+                        ${index < syllabus.length - 1 ?
+                        '<div class="position-absolute" style="width: 4px; background: #dfe2e6; top: 40px; bottom: -24px; left: 18px; z-index: 1; border-radius: 2px;"></div>'
+                        : ''}
+                    </div>
+                    <div class="bg-white p-3 rounded-4 shadow-sm border-0 flex-grow-1 position-relative hover-scale" style="top: -2px;">
+                        <p class="mb-0 fw-bold text-dark" style="font-size: 1rem;">${item}</p>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        new bootstrap.Modal(document.getElementById('syllabusModal')).show();
+    }
+</script>
+
+<style>
+    /* Dashboard Specific Styles */
+    .hover-lift {
+        transition: transform 0.2s;
+    }
+
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .bg-primary-soft {
+        background-color: rgba(78, 115, 223, 0.1);
+    }
+
+    .text-primary-soft {
+        color: #4e73df;
+    }
+
+    .bg-success-soft {
+        background-color: rgba(28, 200, 138, 0.1);
+    }
+
+    .bg-info-soft {
+        background-color: rgba(54, 185, 204, 0.1);
+    }
+
+    .bg-warning-soft {
+        background-color: rgba(246, 194, 62, 0.1);
+    }
+
+    .bg-danger-soft {
+        background-color: rgba(231, 74, 59, 0.1);
+    }
+
+    .border-dashed {
+        border-style: dashed !important;
+    }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    .badge-item {
+        transition: transform 0.2s;
+        cursor: pointer;
+    }
+
+    .badge-item:hover {
+        transform: scale(1.1);
+        background-color: #e9ecef !important;
+    }
+
+    .backdrop-blur {
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+    }
+
+    /* Timeline Animations (Copied from Index) */
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .slide-in-bottom {
+        animation: slideInUp 0.5s ease forwards;
+        opacity: 0;
+    }
+
+    .hover-scale {
+        transition: transform 0.2s;
+    }
+
+    .hover-scale:hover {
+        transform: scale(1.02);
+    }
+
+    /* Ensure Modal works without full bootstrap JS stack if needed */
+    .modal.show {
+        padding-right: 17px;
+        display: block;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,197 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="page-header-block text-center position-relative">
+    <div class="container">
+        <span class="badge bg-danger mb-2 text-uppercase" style="letter-spacing: 2px;">Your Learning Path</span>
+        <h1 class="page-title">{{ course.topic }}</h1>
+        <p class="page-subtitle">{{ course.level }} • {{ course.style }} Style</p>
+
+        <!-- Interactive Progress Bar -->
+        <div class="d-flex justify-content-center align-items-center mt-4">
+            <span class="text-white small fw-bold me-3">PROGRESS</span>
+            <div class="progress"
+                style="height: 10px; width: 300px; background: rgba(255,255,255,0.2); border-radius: 20px;">
+                <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar"
+                    style="width: {{ progress }}%;" aria-valuenow="{{ progress }}" aria-valuemin="0"
+                    aria-valuemax="100"></div>
+            </div>
+            <span class="text-white small fw-bold ms-3">{{ progress }}%</span>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row">
+
+        <!-- Sticky Agent Sidebar -->
+        <div class="col-lg-4 mb-5">
+            <div class="expert-card p-4 sticky-top" style="top: 100px; z-index: 10;">
+                <h5 class="fw-bold mb-4">AI Assessment Team</h5>
+
+                <div class="d-flex align-items-center mb-4">
+                    <div class="me-3 position-relative">
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=curriculum" width="50"
+                            class="rounded-circle bg-light p-1">
+                        <span class="agent-status-dot position-absolute bottom-0 end-0"></span>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-0">Curriculum Agent</h6>
+                        <small class="text-success" style="font-size: 11px;">Roadmap Optimized</small>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center mb-4">
+                    <div class="me-3 position-relative">
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=instructor" width="50"
+                            class="rounded-circle bg-light p-1">
+                        <span class="agent-status-dot position-absolute bottom-0 end-0"></span>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-0">Subject Expert</h6>
+                        <small class="text-primary" style="font-size: 11px;">Content Ready</small>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center mb-4">
+                    <div class="me-3 position-relative">
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=assessment" width="50"
+                            class="rounded-circle bg-light p-1">
+                        <!-- Idle status -->
+                        <span
+                            style="height: 10px; width: 10px; background-color: #ffc107; border-radius: 50%; display: inline-block; position: absolute; bottom: 0; right: 0;"></span>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-0">Assessment Bot</h6>
+                        <small class="text-muted" style="font-size: 11px;">Standing By</small>
+                    </div>
+                </div>
+
+                <div class="alert alert-light border mt-3 mb-0 text-center">
+                    <small class="fw-bold text-muted">NEXT MILESTONE</small><br>
+                    <span class="text-primary fw-bold">Module 1 Quiz</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vertical Timeline Path -->
+        <div class="col-lg-8">
+            <div class="timeline-section">
+                <!-- Vertical Line with Dynamic Progress Gradient -->
+                <div class="timeline-line"
+                    style="background: linear-gradient(to bottom, #10b981 {{ progress }}%, #e9ecef {{ progress }}%);">
+                </div>
+
+                {% for module in modules %}
+                <!-- Timeline Item -->
+                <div class="timeline-item {{ module.status }} {% if module.status == 'locked' %}locked{% endif %}">
+
+                    <!-- Circular Marker -->
+                    <div class="timeline-marker">
+                        {% if module.status == 'completed' %}
+                        <span style="font-size: 20px;">✓</span>
+                        {% elif module.status == 'active' %}
+                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                        {% else %}
+                        {{ loop.index }}
+                        {% endif %}
+                    </div>
+
+                    <!-- Content Card -->
+                    <div class="timeline-content p-0 border overflow-hidden shadow-sm">
+                        <!-- Header -->
+                        <div class="p-4 pb-2 d-flex justify-content-between align-items-start bg-white">
+                            <h5 class="fw-bold mb-1 text-dark">{{ module.module_title }}</h5>
+
+                            {% if module.status == 'completed' %}
+                            <span
+                                class="badge bg-success-subtle text-success border border-success-subtle rounded-pill"><i
+                                    class="bi bi-check-circle me-1"></i> Completed</span>
+                            {% elif module.status == 'active' %}
+                            <span
+                                class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill"><span
+                                    class="spinner-grow spinner-grow-sm me-1"
+                                    style="width: 0.5rem; height: 0.5rem;"></span> In Progress</span>
+                            {% else %}
+                            <span
+                                class="badge bg-secondary-subtle text-secondary border border-secondary-subtle rounded-pill"><i
+                                    class="bi bi-lock me-1"></i> Locked</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Body -->
+                        <div class="px-4 pb-3 bg-white">
+                            <p class="text-muted small mb-0">{{ module.learning_objectives }}</p>
+                        </div>
+
+                        <!-- Footer Actions -->
+                        <div class="bg-light px-4 py-3 border-top d-flex justify-content-end gap-2 align-items-center">
+                            <!-- Lesson Actions -->
+                            {% if module.status == 'active' or module.status == 'completed' %}
+                            {% if module.lesson_done %}
+                            <button class="btn btn-outline-success btn-sm px-3 rounded-pill fw-bold" disabled>
+                                <i class="bi bi-book me-1"></i> Lesson Read
+                            </button>
+                            {% else %}
+                            <a href="{{ url_for('view_lesson', module_id=module.id) }}"
+                                class="btn btn-primary-custom btn-sm px-4 rounded-pill shadow-sm">
+                                Start Lesson &rarr;
+                            </a>
+                            {% endif %}
+                            {% else %}
+                            <button class="btn btn-outline-secondary btn-sm px-3 rounded-pill" disabled
+                                style="opacity: 0.6;">Start Lesson</button>
+                            {% endif %}
+
+                            <!-- Quiz Actions -->
+                            {% if module.status == 'completed' %}
+                            <button class="btn btn-outline-success btn-sm px-3 rounded-pill fw-bold" disabled>
+                                <i class="bi bi-trophy me-1"></i> Quiz Passed
+                            </button>
+                            {% elif module.status == 'active' and module.lesson_done %}
+                            <a href="{{ url_for('view_quiz', module_id=module.id) }}"
+                                class="btn btn-warning text-dark fw-bold btn-sm px-4 rounded-pill shadow-sm">
+                                Take Quiz &rarr;
+                            </a>
+                            {% else %}
+                            <button class="btn btn-outline-secondary btn-sm px-3 rounded-pill" disabled
+                                style="opacity: 0.6;">Take Quiz</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <!-- Finish Line -->
+                <div class="timeline-item">
+                    <div class="timeline-marker certificate-node">
+                        🎓
+                    </div>
+                    <div class="timeline-content border-0 shadow-none bg-transparent ps-0">
+                        <h5 class="text-muted mb-1">Course Completion Certificate</h5>
+                        {% if progress == 100 %}
+                        <p class="text-success small mb-2">All modules completed! You are ready for the final
+                            assessment.</p>
+                        <a href="{{ url_for('final_exam', course_id=course.id) }}"
+                            class="btn btn-warning text-dark fw-bold btn-lg px-4 shadow rounded-pill pulse-button">
+                            📝 Take Final Exam & Claim Certificate
+                        </a>
+                        {% else %}
+                        <small class="text-muted">Complete all modules to unlock your final exam and
+                            certificate.</small>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    /* Additional inline tweaks if specific to this page only */
+    .timeline-section {
+        padding-top: 20px;
+    }
+</style>
+{% endblock %}

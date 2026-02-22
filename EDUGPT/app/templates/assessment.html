@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h5 class="card-title">Assessment Agent</h5>
+                <p class="card-text">"I'll be evaluating your understanding of {{ module.module_title }}. Good luck!"
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="card shadow">
+            <div class="card-body p-5">
+                <h3 class="card-title mb-4">Quiz: {{ module.module_title }}</h3>
+
+                <form action="/submit_assessment/{{ module.id }}" method="POST">
+                    {# Render the AI generated quiz content. For now, we dump it and let the user answer in text fields
+                    #}
+                    <div id="quiz-content" class="mb-4">
+                        {{ quiz }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="answers" class="form-label">Your Answers</label>
+                        <textarea class="form-control" id="answers" name="answers" rows="10"
+                            placeholder="Type your answers here (e.g., 1. A, 2. B, 3. My answer is...)"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-warning w-100">Submit Assessment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Client-side markdown rendering
+    const quizContent = `{{ quiz }}`;
+    document.getElementById('quiz-content').innerHTML = marked.parse(quizContent);
+</script>
+{% endblock %}
