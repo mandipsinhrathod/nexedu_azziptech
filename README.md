@@ -2,7 +2,8 @@
 
 🚀 NexEdu – Learn Beyond Limits
 
-Next-Generation Multi-Agent Educational AI System
+"Next-Generation Multi-Agent Educational AI System"
+
 
 🌟 Overview
 
